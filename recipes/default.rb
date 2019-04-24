@@ -6,10 +6,6 @@ service "apache2" do
 	action :start
 end
 
-#execute "service apache2 start" do
-#	command 'sudo service apache2 start'
-#end
-
 packages = ['mysql-server','mysql-client','php','libapache2-mod-php','php-mcrypt','php-mysql'] 
 packages.each do |package|
 	apt_package package do
@@ -26,9 +22,6 @@ remote_file "download mysqlcommands" do
 	path '/tmp/mysqlcommands'
 end
 
-#execute "sudo cp mysqlcommands /tmp/mysqlcommands" do
-#	command 'sudo cp mysqlcommands /tmp/mysqlcommands'
-#end
 
 execute "mysql -uroot -prootpassword < /tmp/mysqlcommands" do
 	command 'mysql -uroot -prootpassword < /tmp/mysqlcommands'
@@ -44,9 +37,6 @@ package "Installing unzip" do
 	action :install
 end
 
-#execute "Copying latest.zip" do
-#	command 'cp latest.zip /tmp/latest.zip'
-#end
 
 execute "Unzipping latest to html folder" do
 	command 'sudo unzip /tmp/latest.zip -d /var/www/html'
@@ -62,10 +52,6 @@ file "Copying wp-config-sample.php" do
 	path '/var/www/html/wordpress/wp-config.php'
 	action :create
 end
-
-#execute "Copying wp-config-sample.php to wordpress folder" do
-#	command 'sudo cp wp-config-sample.php /var/www/html/wordpress/wp-config.php'
-#end
 
 execute "Setting permission on wordpress folder" do
 	command 'sudo chmod -R 775 /var/www/html/wordpress'
